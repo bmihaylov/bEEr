@@ -1,8 +1,19 @@
-package com.example.beer;
+package com.example.beer.model;
 
 import com.example.beer.model.Project;
 
 import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="task")
@@ -23,10 +34,10 @@ public class Task {
 	double estimatedHours;
 	double workedHours;
 
-	@Enumerated(STRING)
+	@Enumerated(EnumType.STRING)
 	TaskStatus status;
 	
-	@OneToOne
+	@ManyToOne
 	Project project;
 	
 	void setId(int id) {
