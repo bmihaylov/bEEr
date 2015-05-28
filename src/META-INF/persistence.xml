@@ -5,6 +5,8 @@
 	<persistence-unit name="bEEr">
 		<description>Container Persistence Unit</description>
 		<jta-data-source>bEEr</jta-data-source>
+		<class>com.example.beer.model.Comment</class>
+		<class>com.example.beer.model.User</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="openjpa.jdbc.SynchronizeMappings"
