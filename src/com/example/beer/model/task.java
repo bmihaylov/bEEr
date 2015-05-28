@@ -8,7 +8,6 @@ import java.sql.Date;
 @Table(name="task")
 public class Task {
 	
-	@Enumerated(STRING)
 	public enum TaskStatus {BEGIN, INPROGRESS, FINISHED}
 	
 	@Id
@@ -24,9 +23,10 @@ public class Task {
 	double estimatedHours;
 	double workedHours;
 
+	@Enumerated(STRING)
 	TaskStatus status;
 	
-	@OneToMany
+	@OneToOne
 	Project project;
 	
 	void setId(int id) {
