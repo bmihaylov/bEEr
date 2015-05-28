@@ -2,7 +2,7 @@ package com.example.beer.model;
 
 import com.example.beer.model.Project;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
