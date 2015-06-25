@@ -28,3 +28,6 @@ target/
 *.jar
 *.war
 *.ear
+
+# WebStorm File #
+.idea/
