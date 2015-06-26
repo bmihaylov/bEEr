@@ -2,6 +2,7 @@ package com.example.beer.dao;
 
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Collection;
 import java.util.Random;
 
 import javax.ejb.Singleton;
@@ -18,6 +19,8 @@ public class UserDAO {
 	private EntityManager em;
 	
     String userQueryText = "SELECT u FROM User u WHERE u.name = :userName";
+
+    String allUsersQueryText = "SELECT u FROM User u";
 	
 
     enum ValidationResult {
@@ -51,6 +54,10 @@ public class UserDAO {
 			return null;
 		}
 		return user;
+	}
+	
+	public Collection<User> getAllUsers() {
+		return em.createQuery(allUsersQueryText, User.class).getResultList();
 	}
 	
 	public void addUser(User user, String password) {
