@@ -34,6 +34,8 @@ public class User implements Serializable {
 	private String email;
 	
 	private Set<Task> tasks = new HashSet<Task>();
+	
+	private static int saltLength = 32;
 
 	public int getId() {
 		return id;
@@ -89,6 +91,14 @@ public class User implements Serializable {
 
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
+	}
+
+	public static int getSaltLength() {
+		return saltLength;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public User() {
