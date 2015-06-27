@@ -30,7 +30,6 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "name")
 	String name;
 	String description;
 
@@ -44,7 +43,6 @@ public class Task {
 	TaskStatus status;
 
 	@ManyToOne
-	@Column(name = "project")
 	Project project;
 
 	void setId(int id) {
