@@ -22,9 +22,9 @@ public class Project implements Serializable {
 
 	private String name;
 	
-	@Transient
+	@ManyToMany
 	private Set<Task> tasks = new HashSet<Task>();
-	@Transient
+	@ManyToMany
 	private Set<User> users = new HashSet<User>();
 	
 
