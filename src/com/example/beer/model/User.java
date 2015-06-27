@@ -20,7 +20,7 @@ public class User implements Serializable {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	@Column(unique=true)
@@ -33,9 +33,16 @@ public class User implements Serializable {
 	
 	private String email;
 	
+	@ManyToMany
 	private Set<Task> tasks = new HashSet<Task>();
 	
 	private static int saltLength = 32;
+
+	public User(String name, String username, String email) {
+		this.fullName = name;
+		this.name = username;
+		this.email = email;
+	}
 
 	public int getId() {
 		return id;
@@ -99,10 +106,6 @@ public class User implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public User() {
-		super();
 	}
    
 }
