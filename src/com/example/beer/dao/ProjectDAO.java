@@ -1,5 +1,7 @@
 package com.example.beer.dao;
 
+import java.util.Collection;
+
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -48,5 +50,10 @@ public class ProjectDAO {
 		} catch (NoResultException e) {
 			return null;
 		}
+	}
+	
+	public Collection<Project> getAllProjects() {
+		String queryText = "SELECT p FROM Project p";
+		return em.createQuery(queryText, Project.class).getResultList();
 	}
 }
