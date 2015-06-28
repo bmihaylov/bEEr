@@ -35,4 +35,16 @@ public class ProjectDAO {
 			return null;
 		}
 	}
+	
+	public Project findProjectById(int projectId) {
+		String idQueryText = "SELECT p FROM Project p WHERE p.id= :projectId";
+		TypedQuery<Project> idQuery = em.createQuery(idQueryText, Project.class);
+		idQuery.setParameter("projectId", projectId);
+		
+		try {
+			return idQuery.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }
