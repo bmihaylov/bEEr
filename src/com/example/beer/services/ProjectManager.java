@@ -58,4 +58,11 @@ public class ProjectManager {
         
         return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
 	}
+
+	@GET
+	@Path("user")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Collection<Project> getProjectsForUser(String username) {
+		return projectDAO.getProjectsForUser(username);
+	}
 }
