@@ -44,6 +44,9 @@ public class Task {
 
 	@ManyToOne
 	Project project;
+	
+	@ManyToOne
+	User asignee;
 
 	void setId(int id) {
 		this.id = id;

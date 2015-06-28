@@ -33,7 +33,7 @@ public class User implements Serializable {
 	
 	private String email;
 	
-	@ManyToMany
+	@OneToMany
 	private Set<Task> tasks = new HashSet<Task>();
 	
 	private static int saltLength = 32;
