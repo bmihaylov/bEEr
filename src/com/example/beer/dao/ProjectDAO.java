@@ -17,7 +17,7 @@ public class ProjectDAO {
 	public boolean addProject(Project project) {
 		Project foundProject = findProjectByName(project.getName());
 		
-		if (foundProject != null) {
+		if (foundProject == null) {
 			em.persist(project);
 			return true;
 		} else {
