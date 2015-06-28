@@ -5,11 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: User
  *
  */
+@XmlRootElement
 @Entity
 public class User implements Serializable {
 	/**
@@ -21,6 +23,15 @@ public class User implements Serializable {
 		
 	}
 	
+	public User(String name, String saltPassHash, String fullName, String email, boolean isAdmin) {
+		super();
+		this.name = name;
+		this.saltPassHash = saltPassHash;
+		this.fullName = fullName;
+		this.email = email;
+		this.isAdmin = isAdmin;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
