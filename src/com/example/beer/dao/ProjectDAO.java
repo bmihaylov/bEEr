@@ -25,12 +25,12 @@ public class ProjectDAO {
 	}
 
 	public Project findProjectByName(String name) {
-		TypedQuery<Project> query = em
-				.createNamedQuery("findProjectByName", Project.class)
-				.setParameter("name", name);
+		String idQueryText = "SELECT p FROM Project p WHERE p.name= :projectName";
+		TypedQuery<Project> idQuery = em.createQuery(idQueryText, Project.class);
+		idQuery.setParameter("projectName", name);
 		
 		try {
-			return query.getSingleResult();
+			return idQuery.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		}
