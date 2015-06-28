@@ -56,4 +56,12 @@ public class ProjectDAO {
 		String queryText = "SELECT p FROM Project p";
 		return em.createQuery(queryText, Project.class).getResultList();
 	}
+	
+	public Collection<Project> getProjectsForUser(String user) {
+		String queryText = "SELECT p FROM Project p WHERE :user in p.users";
+		TypedQuery<Project> usersProjectsQuery = em.createQuery(queryText, Project.class);
+		usersProjectsQuery.setParameter("user", user);
+		
+		return usersProjectsQuery.getResultList();
+	}
 }
