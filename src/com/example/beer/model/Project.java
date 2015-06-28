@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 
@@ -22,7 +24,7 @@ public class Project implements Serializable {
 
 	private String name;
 	
-	@ManyToMany
+	@OneToMany
 	private Set<Task> tasks = new HashSet<Task>();
 	@ManyToMany
 	private Set<User> users = new HashSet<User>();
@@ -38,7 +40,7 @@ public class Project implements Serializable {
 
 	boolean addTask(Task task) {
 		if (!tasks.contains(task)) {
-			task.setProjectId(id);
+			task.setProject(this);
 			tasks.add(task);
 			return true;
 		}
@@ -47,7 +49,7 @@ public class Project implements Serializable {
 	}
 	
 	void removeTask(Task task) {
-		task.setProjectId(-1);
+		task.setProject(null);
 		tasks.remove(task);
 	}
 
