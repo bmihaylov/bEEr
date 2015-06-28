@@ -18,9 +18,6 @@ public class UserDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-
-	
-
     enum ValidationResult {
     	NO_SUCH_USER, WRONG_PASS, SUCCESS;
     }
@@ -66,7 +63,7 @@ public class UserDAO {
 		user.setSaltPassHash(hashPassword(salt, password));
 		em.persist(user);
 	}
-	
+
 	public static String generateSalt() {
 		Random rng = new SecureRandom();
 		byte[] saltBytes = new byte[User.getSaltLength()];
