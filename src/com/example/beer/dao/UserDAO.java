@@ -17,24 +17,20 @@ public class UserDAO {
 
 	@PersistenceContext
 	private EntityManager em;
-	
-    enum ValidationResult {
-    	NO_SUCH_USER, WRONG_PASS, SUCCESS;
-    }
 
-	public ValidationResult validateCredentials(String userName, String password) {
+	public User validateCredentials(String userName, String password) {
 		User user = getUserByName(userName);
             
 		if (user == null) {
-			return ValidationResult.NO_SUCH_USER;
+			return null;
 		}
 
 		String supposedHash = hashPassword(user.getSalt(), password);
 		
 		if (user.getSaltPassHash().equals(supposedHash)) {
-			return ValidationResult.SUCCESS;
+			return user;
 		} else {
-			return ValidationResult.WRONG_PASS;
+			return null;
 		}
 	}
 	
@@ -57,7 +53,9 @@ public class UserDAO {
 		return em.createQuery(allUsersQueryText, User.class).getResultList();
 	}
 	
-	public void addUser(User user, String password) {
+	public void addUser(User user) {
+
+		String password = user.getSaltPassHash(); //this is the given password
 		String salt = generateSalt();
 		user.setSalt(salt);
 		user.setSaltPassHash(hashPassword(salt, password));
