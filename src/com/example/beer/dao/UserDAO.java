@@ -18,9 +18,7 @@ public class UserDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-    String userQueryText = "SELECT u FROM User u WHERE u.name = :userName";
 
-    String allUsersQueryText = "SELECT u FROM User u";
 	
 
     enum ValidationResult {
@@ -44,6 +42,7 @@ public class UserDAO {
 	}
 	
 	public User getUserByName(String userName) {
+        String userQueryText = "SELECT u FROM User u WHERE u.name = :userName";
 		TypedQuery<User> userQuery = em.createQuery(userQueryText, User.class);
 		userQuery.setParameter("userName", userName);
 
@@ -57,6 +56,7 @@ public class UserDAO {
 	}
 	
 	public Collection<User> getAllUsers() {
+        String allUsersQueryText = "SELECT u FROM User u";
 		return em.createQuery(allUsersQueryText, User.class).getResultList();
 	}
 	
