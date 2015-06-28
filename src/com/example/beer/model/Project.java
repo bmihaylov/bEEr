@@ -23,11 +23,15 @@ public class Project implements Serializable {
 
 	private String name;
 	
-	@OneToMany
+	@OneToMany(mappedBy="project")
 	private Set<Task> tasks = new HashSet<Task>();
 	@ManyToMany
 	private Set<User> users = new HashSet<User>();
 	
+
+	public Project() {
+		
+	}
 
 	public Project(String name, User[] users) {
 		this.name = name;

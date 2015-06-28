@@ -18,11 +18,15 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "task", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"name", "project" }))
+		"name", "project_id" }))
 public class Task {
 
 	public enum TaskStatus {
 		BEGIN, INPROGRESS, FINISHED
+	}
+
+	public Task() {
+		
 	}
 
 	@Id

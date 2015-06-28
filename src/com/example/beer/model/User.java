@@ -11,13 +11,15 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class User implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1460111118024195065L;
 
+	public User() {
+		
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +35,16 @@ public class User implements Serializable {
 	
 	private String email;
 	
+	private boolean isAdmin;
+	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	@OneToMany
 	private Set<Task> tasks = new HashSet<Task>();
 	
