@@ -53,8 +53,12 @@ public class UserManager {
 		User currentUser = userContext.getCurrentUser();
 		
 		if (currentUser.isAdmin()) {
-            userDAO.addUser(user);
-            return Response.status(HttpURLConnection.HTTP_OK).build();
+			if (userDAO.getUserByName(user.getName()) == null) {
+                userDAO.addUser(user);
+                return Response.status(HttpURLConnection.HTTP_OK).build();
+			} else {
+                return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
+			}
 		}
 		
         return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
