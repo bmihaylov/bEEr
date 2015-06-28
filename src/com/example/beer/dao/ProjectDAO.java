@@ -14,13 +14,15 @@ public class ProjectDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void addProject(Project project) {
+	public boolean addProject(Project project) {
 		Project foundProject = findProjectByName(project.getName());
 		
 		if (foundProject != null) {
 			em.persist(project);
+			return true;
 		} else {
 			// TODO: Maybe update project title or users, or tasks?
+			return false;
 		}
 	}
 
