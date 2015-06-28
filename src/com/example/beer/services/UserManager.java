@@ -64,5 +64,4 @@ public class UserManager {
 
 		return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
 	}
-
 }
