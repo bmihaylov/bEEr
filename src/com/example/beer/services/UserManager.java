@@ -28,40 +28,41 @@ public class UserManager {
 	@Path("login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(WebUser user) {
-		User foundUser = userDAO.validateCredentials(
-				user.getUsername(), user.getPassword());
-		
+		User foundUser = userDAO.validateCredentials(user.getUsername(),
+				user.getPassword());
+
 		if (foundUser != null) {
 			userContext.setCurrentUser(foundUser);
-            return Response.status(HttpURLConnection.HTTP_OK).build();
+			return Response.status(HttpURLConnection.HTTP_OK).build();
 		}
 
-        return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+		return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 	}
-	
+
 	@POST
 	@Path("logout")
 	public Response logout() {
 		userContext.setCurrentUser(null);
-        return Response.status(HttpURLConnection.HTTP_OK).build();
+		return Response.status(HttpURLConnection.HTTP_OK).build();
 	}
-	
+
 	@POST
 	@Path("register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response registerNewUser(User user) {
 		User currentUser = userContext.getCurrentUser();
-		
+		User foundUser = userDAO.getUserByName(user.getName());
+
 		if (currentUser.isAdmin()) {
-			if (userDAO.getUserByName(user.getName()) == null) {
-                userDAO.addUser(user);
-                return Response.status(HttpURLConnection.HTTP_OK).build();
+			if (foundUser == null) {
+				userDAO.addUser(user);
+				return Response.status(HttpURLConnection.HTTP_OK).build();
 			} else {
-                return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
+				return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
 			}
 		}
-		
-        return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
+
+		return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
 	}
 
 }
