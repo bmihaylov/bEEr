@@ -1,6 +1,7 @@
 package com.example.beer.services;
 
 import java.net.HttpURLConnection;
+import java.util.Collection;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 import com.example.beer.dao.ProjectDAO;
 import com.example.beer.model.Project;
+import com.example.beer.model.User;
 
 @Stateless
 @Path("project")
@@ -23,6 +25,12 @@ public class ProjectManager {
 	
 	@Inject
 	UserContext userContext;
+	
+	@GET
+	@javax.ws.rs.Produces(MediaType.APPLICATION_JSON)
+	public Collection<Project> getAllProjects() {
+		return projectDAO.getAllProjects();
+	}
 	
 	@GET
 	@Path("projectId")
@@ -39,7 +47,8 @@ public class ProjectManager {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createProject(Project project) {
-		if (!userContext.getCurrentUser().isAdmin()) {
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null || !currentUser.isAdmin()) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
 		
