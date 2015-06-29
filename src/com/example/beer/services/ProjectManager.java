@@ -65,4 +65,20 @@ public class ProjectManager {
 	public Collection<Project> getProjectsForUser(String username) {
 		return projectDAO.getProjectsForUser(username);
 	}
+	
+	@POST
+	@Path("add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addUser(Project project, User user) {
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null || !currentUser.isAdmin()) {
+			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+		}
+		
+		if (projectDAO.addUser(project, user)) {
+			return Response.status(HttpURLConnection.HTTP_OK).build();
+		}
+		
+		return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
+	}
 }
