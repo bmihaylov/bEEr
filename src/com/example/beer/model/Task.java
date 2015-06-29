@@ -79,7 +79,7 @@ public class Task {
 		return id;
 	}
 
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -87,35 +87,35 @@ public class Task {
 		return name;
 	}
 
-	void setDescription(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	String getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
-	void setFinalData(Date finalDate) {
+	public void setFinalData(Date finalDate) {
 		this.finalDate = finalDate;
 	}
 
-	Date getFinalDate() {
+	public Date getFinalDate() {
 		return finalDate;
 	}
 
-	void setHoursWorked(double hours) {
+	public void setHoursWorked(double hours) {
 		this.workedHours = hours;
 	}
 
-	double getHoursWorked() {
+	public double getHoursWorked() {
 		return workedHours;
 	}
 
-	void setHoursEstimated(double hours) {
+	public void setHoursEstimated(double hours) {
 		this.estimatedHours = hours;
 	}
 
-	double getHoursEstimated() {
+	public double getHoursEstimated() {
 		return estimatedHours;
 	}
 
@@ -123,7 +123,7 @@ public class Task {
 		this.status = status;
 	}
 
-	TaskStatus getTaskStatus() {
+	public TaskStatus getTaskStatus() {
 		return status;
 	}
 
@@ -131,7 +131,7 @@ public class Task {
 		this.project = project;
 	}
 
-	Project getProject() {
+	public Project getProject() {
 		return project;
 	}
 
