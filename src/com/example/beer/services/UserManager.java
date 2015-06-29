@@ -106,19 +106,18 @@ public class UserManager {
 	@Path("tasks/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getTasksForUser(@PathParam("userId") int userId) {
-		User currentUser = userContext.getCurrentUser();
-		if (currentUser == null || !currentUser.isAdmin()) {
-			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
-		}
-		
 		User user = userDAO.getUserById(userId);
-		
 		if (user == null) {
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 		}
-		
+
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null || !currentUser.isAdmin() && !currentUser.equals(user)) {
+			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
+		}
 		
 		TaskContainer tasks = new TaskContainer(user.getTasks());
+		System.out.println(user.getTasks().size());
 		return Response.ok(tasks).build();
 	}
 }
