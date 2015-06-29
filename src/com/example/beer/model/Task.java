@@ -55,7 +55,7 @@ public class Task {
 		this.id = id;
 	}
 
-	int getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -63,7 +63,7 @@ public class Task {
 		this.name = name;
 	}
 
-	String getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -99,7 +99,7 @@ public class Task {
 		return estimatedHours;
 	}
 
-	void setTaskStatus(TaskStatus status) {
+	public void setTaskStatus(TaskStatus status) {
 		this.status = status;
 	}
 
@@ -107,11 +107,15 @@ public class Task {
 		return status;
 	}
 
-	void setProject(Project project) {
+	public void setProject(Project project) {
 		this.project = project;
 	}
 
 	Project getProject() {
 		return project;
+	}
+
+	public void assignUser(User user) {
+		assignee = user;
 	}
 };
