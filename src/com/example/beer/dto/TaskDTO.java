@@ -7,6 +7,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.example.beer.model.Task;
+import com.example.beer.model.Task.TaskStatus;
 
 @XmlRootElement
 public class TaskDTO {
@@ -28,7 +29,17 @@ public class TaskDTO {
     
 	private int assigneeId;
 
-    public TaskDTO() {
+	private TaskStatus status;
+	
+    public TaskStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TaskStatus status) {
+		this.status = status;
+	}
+
+	public TaskDTO() {
     	
     }
     
@@ -40,6 +51,7 @@ public class TaskDTO {
     	workedHours = task.getHoursWorked();
     	estimatedHours = task.getHoursEstimated();
     	projectId = task.getProject().getId();
+    	status = task.getTaskStatus();
 	}
 
     public double getWorkedHours() {
