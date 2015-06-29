@@ -145,7 +145,7 @@ public class TaskManager {
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 		}
 		
-		if (!task.getAssignee().equals(currentUser)) {
+		if (task.getAssignee().getId() != currentUser.getId()) {
 			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
 		}
 		
