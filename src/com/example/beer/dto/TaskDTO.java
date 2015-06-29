@@ -20,7 +20,7 @@ public class TaskDTO {
 	@Temporal(TemporalType.DATE)
     private Date finalDate;
 	
-	private int estimatedHours;
+	private double estimatedHours;
 	
     private int projectId;
     
@@ -54,11 +54,11 @@ public class TaskDTO {
 		this.finalDate = finalDate;
 	}
 
-	public int getEstimatedHours() {
+	public double getEstimatedHours() {
 		return estimatedHours;
 	}
 
-	public void setEstimatedHours(int estimatedHours) {
+	public void setEstimatedHours(double estimatedHours) {
 		this.estimatedHours = estimatedHours;
 	}
 

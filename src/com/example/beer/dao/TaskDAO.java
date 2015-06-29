@@ -26,7 +26,7 @@ public class TaskDAO {
 	private UserDAO userDAO;
 
 	public boolean addTask(String name, String description, Date finalDate,
-			int estimatedHours, Project project, User user) {
+			double estimatedHours, Project project, User user) {
 		Task foundTask = findTaskByName(name);
 
 		if (foundTask == null) {

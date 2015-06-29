@@ -131,4 +131,11 @@ public class TaskManager {
 		return Response.ok(new TaskDTO(foundTask)).build();
 	}
 
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("log/{taskId}/{hours}")
+	public Response log() {
+		return null;
+		
+	}
 }

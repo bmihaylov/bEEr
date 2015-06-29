@@ -37,7 +37,7 @@ public class Task implements Serializable {
 	}
 
 	public Task(String name, String description, Date finalDate,
-			int estimatedHours, Project project, User assignee) {
+			double estimatedHours, Project project, User assignee) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -59,8 +59,8 @@ public class Task implements Serializable {
 	@Temporal(TemporalType.DATE)
 	Date finalDate;
 
-	int estimatedHours;
-	int workedHours;
+	double estimatedHours;
+	double workedHours;
 
 	@Enumerated(EnumType.STRING)
 	TaskStatus status;
@@ -110,19 +110,19 @@ public class Task implements Serializable {
 		return finalDate;
 	}
 
-	public void setHoursWorked(int hours) {
+	public void setHoursWorked(double hours) {
 		this.workedHours = hours;
 	}
 
-	public int getHoursWorked() {
+	public double getHoursWorked() {
 		return workedHours;
 	}
 
-	public void setHoursEstimated(int hours) {
+	public void setHoursEstimated(double hours) {
 		this.estimatedHours = hours;
 	}
 
-	public int getHoursEstimated() {
+	public double getHoursEstimated() {
 		return estimatedHours;
 	}
 
