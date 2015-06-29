@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.example.beer.model.Project;
+import com.example.beer.model.User;
 
 @Singleton
 public class ProjectDAO {
@@ -63,5 +64,17 @@ public class ProjectDAO {
 		usersProjectsQuery.setParameter("user", user);
 		
 		return usersProjectsQuery.getResultList();
+	}
+
+	public boolean addUser(Project project, User user) {
+		Project foundProject = findProjectByName(project.getName());
+		
+		if (foundProject == null) {
+			return false;
+		}
+		
+		project.addUser(user);
+		em.persist(project);
+		return true;
 	}
 }
