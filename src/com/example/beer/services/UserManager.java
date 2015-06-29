@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.example.beer.dao.UserDAO;
+import com.example.beer.dto.TaskContainer;
 import com.example.beer.dto.UserDTO;
 import com.example.beer.dto.UserDTOContainer;
 import com.example.beer.model.User;
@@ -99,5 +100,25 @@ public class UserManager {
 		
 		
 		return Response.ok(new UserDTO(user)).build();
+	}
+	
+	@GET
+	@Path("tasks/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getTasksForUser(@PathParam("userId") int userId) {
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null || !currentUser.isAdmin()) {
+			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
+		}
+		
+		User user = userDAO.getUserById(userId);
+		
+		if (user == null) {
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+		}
+		
+		
+		TaskContainer tasks = new TaskContainer(user.getTasks());
+		return Response.ok(tasks).build();
 	}
 }
