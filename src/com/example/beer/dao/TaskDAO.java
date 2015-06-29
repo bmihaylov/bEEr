@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import com.example.beer.model.Comment;
 import com.example.beer.model.Project;
 import com.example.beer.model.Task;
 import com.example.beer.model.Task.TaskStatus;
@@ -100,6 +101,16 @@ public class TaskDAO {
 		}
 		
 		task.setTaskStatus(status);
+		em.persist(task);
+		return true;
+	}
+
+	public boolean addComment(Task task, Comment comment) {
+		if (findTaskByName(task.getName()) == null) {
+			return false;
+		}
+		
+		task.addComment(comment);
 		em.persist(task);
 		return true;
 	}
