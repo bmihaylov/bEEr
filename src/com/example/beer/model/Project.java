@@ -55,7 +55,7 @@ public class Project implements Serializable {
 		return false;
 	}
 	
-	void removeTask(Task task) {
+	public void removeTask(Task task) {
 		task.setProject(null);
 		tasks.remove(task);
 	}
@@ -64,7 +64,7 @@ public class Project implements Serializable {
 		return tasks;
 	}
 	
-	boolean addUser(User user) {
+	public boolean addUser(User user) {
 		if (!users.contains(user)) {
 			users.add(user);
 			return true;
@@ -72,11 +72,11 @@ public class Project implements Serializable {
 		return false;
 	}
 	
-	void removeUser(User user) {
+	public void removeUser(User user) {
 		users.remove(user);
 	}
 
-	Set<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
