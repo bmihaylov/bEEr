@@ -55,7 +55,7 @@ public class TaskManager {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response assignUser(User user, Task task) {
 		User currentUser = userContext.getCurrentUser();
-		if (currentUser == null || !currentUser.isAdmin()) {
+		if (currentUser == null) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		} 
 		
