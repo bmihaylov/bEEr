@@ -19,6 +19,7 @@ import com.example.beer.dao.UserDAO;
 import com.example.beer.dto.TaskDTO;
 import com.example.beer.model.Project;
 import com.example.beer.model.Task;
+import com.example.beer.model.Task.TaskStatus;
 import com.example.beer.model.User;
 
 @Stateless
@@ -90,25 +91,26 @@ public class TaskManager {
 		return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 	}
 
-//	 @POST
-//	 @Consumes(MediaType.APPLICATION_JSON)
-//	 public Response changeStatus(Task task, TaskStatus status) {
-//	 User currentUser = userContext.getCurrentUser();
-//	
-//	 if (currentUser == null) {
-//	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
-//	 }
-//	
-//	 if (!task.getAssignee().equals(currentUser) && !currentUser.isAdmin()) {
-//	 return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
-//	 }
-//	
-//	 if (taskDAO.changeStatus(task, status)) {
-//	 return Response.status(HttpURLConnection.HTTP_OK).build();
-//	 }
-//	
-//	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
-//	 }
+	 @POST
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 @Path("status/{taskId}")
+	 public Response changeStatus(Task task, TaskStatus status) {
+	 User currentUser = userContext.getCurrentUser();
+	
+	 if (currentUser == null) {
+	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+	 }
+	
+	 if (!task.getAssignee().equals(currentUser) && !currentUser.isAdmin()) {
+	 return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
+	 }
+	
+	 if (taskDAO.changeStatus(task, status)) {
+	 return Response.status(HttpURLConnection.HTTP_OK).build();
+	 }
+	
+	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+	 }
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
