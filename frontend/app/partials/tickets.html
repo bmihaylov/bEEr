@@ -1,1 +1,20 @@
-<h1>TICKETS</h1>
+<div id="wrapper">
+
+    <!-- Navigation -->
+
+    <header></header>
+    <!-- /.navbar-top-links -->
+
+
+    <!-- /.navbar-static-side -->
+
+    <div id="page-wrapper" style="min-height: 561px;">
+        <div ui-view>
+            <span> Tickets</span>
+            <div class="row"><div class="col-md-3" ng-repeat="ticket in tickets"><ticket user="{{ticket.userName}}" name="{{ticket.name}}"></ticket></div></div>
+
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+</div>
