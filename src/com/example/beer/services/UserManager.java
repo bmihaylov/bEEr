@@ -5,12 +5,17 @@ import java.net.HttpURLConnection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.example.beer.dao.UserDAO;
+import com.example.beer.dto.UserDTO;
+import com.example.beer.dto.UserDTOContainer;
 import com.example.beer.model.User;
 import com.example.beer.model.WebUser;
 
@@ -63,5 +68,36 @@ public class UserManager {
 		}
 
 		return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsers() {
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null || !currentUser.isAdmin()) {
+			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
+		}
+
+		UserDTOContainer users = new UserDTOContainer(userDAO.getAllUsers());
+		return Response.ok(users).build();
+	}
+	
+	@GET
+	@Path("{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUserByName(@PathParam("username") String username) {
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null || !currentUser.isAdmin()) {
+			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
+		}
+
+		User user = userDAO.getUserByName(username);
+		
+		if (user == null) {
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+		}
+		
+		
+		return Response.ok(new UserDTO(user)).build();
 	}
 }
