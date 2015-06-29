@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -25,20 +26,26 @@ public class CommentManager {
 	
 	@Inject
 	private TaskDAO taskDAO;
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("add")
-	public Response addComment(Task task, Comment comment) {
+	@Path("add/{taskId}")
+	public Response addComment(@PathParam("taskId") int taskId, Comment comment) {
 		User currentUser = userContext.getCurrentUser();
 		
 		if (currentUser == null) {
-			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
 		
+		Task task = taskDAO.getTaskById(taskId);
+		if (task == null) {
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+		}
+
 		comment.setAuthor(currentUser);
 		comment.setDate(new Date());
 		taskDAO.addComment(task, comment);
+
 		return Response.status(HttpURLConnection.HTTP_OK).build(); 
 	}
 		
