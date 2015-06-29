@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import com.example.beer.model.Task;
 import com.example.beer.model.User;
 
 @Singleton
@@ -74,6 +75,11 @@ public class UserDAO {
 		String salt = generateSalt();
 		user.setSalt(salt);
 		user.setSaltPassHash(hashPassword(salt, password));
+		em.persist(user);
+	}
+
+	public void addTask(Task task, User user) {
+		user.getTasks().add(task);
 		em.persist(user);
 	}
 

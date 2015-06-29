@@ -11,7 +11,9 @@ import com.example.beer.model.Task;
 @XmlRootElement
 public class TaskDTO {
 
-    private String name;
+	private int id;
+	
+	private String name;
     
     private String description;
     
@@ -22,11 +24,14 @@ public class TaskDTO {
 	
     private int projectId;
     
+	private int assigneeId;
+
     public TaskDTO() {
     	
     }
     
     public TaskDTO(Task task) {
+    	id = task.getId();
     	name = task.getName();
     	description = task.getDescription();
     	finalDate = task.getFinalDate();
@@ -34,6 +39,13 @@ public class TaskDTO {
     	projectId = task.getProject().getId();
 	}
 
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Date getFinalDate() {
 		return finalDate;
 	}
@@ -49,7 +61,6 @@ public class TaskDTO {
 	public void setEstimatedHours(int estimatedHours) {
 		this.estimatedHours = estimatedHours;
 	}
-	private int assigneeId;
 
 	public int getProjectId() {
 		return projectId;
