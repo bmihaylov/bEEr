@@ -1,5 +1,6 @@
 package com.example.beer.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,11 +17,18 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "task", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"name", "project_id" }))
-public class Task {
+@XmlRootElement
+public class Task implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5706226867487646787L;
 
 	public enum TaskStatus {
 		BEGIN, INPROGRESS, FINISHED
@@ -107,7 +115,7 @@ public class Task {
 		this.workedHours = hours;
 	}
 
-	public double getHoursWorked() {
+	public int getHoursWorked() {
 		return workedHours;
 	}
 

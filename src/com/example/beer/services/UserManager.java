@@ -58,7 +58,7 @@ public class UserManager {
 		User currentUser = userContext.getCurrentUser();
 		User foundUser = userDAO.getUserByName(user.getName());
 
-		if (currentUser.isAdmin()) {
+		if (currentUser != null && currentUser.isAdmin()) {
 			if (foundUser == null) {
 				userDAO.addUser(user);
 				return Response.status(HttpURLConnection.HTTP_OK).build();
