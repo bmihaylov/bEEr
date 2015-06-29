@@ -31,3 +31,5 @@ target/
 
 # WebStorm File #
 .idea/
+
+.project/
