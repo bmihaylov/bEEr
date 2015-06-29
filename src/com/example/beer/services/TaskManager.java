@@ -91,27 +91,47 @@ public class TaskManager {
 		return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 	}
 
-	 @POST
-	 @Consumes(MediaType.APPLICATION_JSON)
-	 @Path("status/{taskId}")
-	 public Response changeStatus(Task task, TaskStatus status) {
-	 User currentUser = userContext.getCurrentUser();
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("status/{taskId}/{status}")
+	public Response changeStatus(@PathParam("taskId") int taskId, @PathParam("status") String status) {
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null) {
+			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+		}
+
+		Task task = taskDAO.getTaskById(taskId);
+		if (task == null) {
+            return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+		}
+		
+
+		if (task.getAssignee().getId() != currentUser.getId() && !currentUser.isAdmin()) {
+			return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
+		}
+
+		TaskStatus taskStatus = getStatus(status);
+		if (taskStatus == null) {
+			return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
+		}
+
+		if (taskDAO.changeStatus(task, taskStatus)) {
+			return Response.status(HttpURLConnection.HTTP_OK).build();
+		}
+
+        return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
+	}
 	
-	 if (currentUser == null) {
-	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
-	 }
-	
-	 if (!task.getAssignee().equals(currentUser) && !currentUser.isAdmin()) {
-	 return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
-	 }
-	
-	 if (taskDAO.changeStatus(task, status)) {
-	 return Response.status(HttpURLConnection.HTTP_OK).build();
-	 }
-	
-	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
-	 }
-	
+	private static TaskStatus getStatus(String status) {
+		for (TaskStatus ts: TaskStatus.values()) {
+			if (ts.name().equals(status.toUpperCase())) {
+				return ts;
+			}
+		}
+
+		return null;
+	}
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{taskId}")
@@ -134,22 +154,23 @@ public class TaskManager {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("log/{taskId}/{hours}")
-	public Response log(@PathParam("taskId") int taskId, @PathParam("hours") double hours) {
+	public Response log(@PathParam("taskId") int taskId,
+			@PathParam("hours") double hours) {
 		User currentUser = userContext.getCurrentUser();
 		if (currentUser == null) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
-		
+
 		Task task = taskDAO.getTaskById(taskId);
 		if (task == null) {
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 		}
-		
+
 		if (task.getAssignee().getId() != currentUser.getId()) {
 			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
 		}
-		
+
 		taskDAO.logHours(task, hours);
-        return Response.status(HttpURLConnection.HTTP_OK).build();
+		return Response.status(HttpURLConnection.HTTP_OK).build();
 	}
 }
