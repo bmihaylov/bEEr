@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -79,7 +80,7 @@ public class Task implements Serializable {
 	@ManyToOne
 	User assignee;
 
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	Set<Comment> comments = new HashSet<Comment>();
 	
 	public User getAssignee() {

@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Entity implementation class for Entity: Comment
  *
  */
 @Entity
+@XmlRootElement
 public class Comment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
