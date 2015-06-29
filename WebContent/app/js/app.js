@@ -53,8 +53,7 @@ app.config([ '$routeProvider', '$stateProvider', '$ocLazyLoadProvider',
 		} ]);
 
 function loadMyDirectives($ocLazyLoad) {
-	return
-			$ocLazyLoad
+	return $ocLazyLoad
 					.load({
 						name : 'myApp',
 						files : [
