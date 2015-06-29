@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import com.example.beer.dao.ProjectDAO;
 import com.example.beer.dao.TaskDAO;
+import com.example.beer.dao.UserDAO;
 import com.example.beer.model.Project;
 import com.example.beer.model.Task;
 import com.example.beer.model.Task.TaskStatus;
@@ -26,6 +27,9 @@ public class TaskManager {
 	
 	@Inject
 	TaskDAO taskDAO;
+	
+	@Inject
+	UserDAO userDAO;
 	
 	@Inject
 	UserContext userContext;
@@ -71,10 +75,14 @@ public class TaskManager {
 	public Response changeStatus(Task task, TaskStatus status) {
 		User currentUser = userContext.getCurrentUser();
 		
-		if (currentUser == null || !currentUser.isAdmin()) {
+		if (currentUser == null) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build(); 
 		}
 		
+		if (task.getAssignee() != currentUser && !currentUser.isAdmin()) {
+			return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build(); 
+		}
+
 		if (taskDAO.changeStatus(task, status)) {
 			return Response.status(HttpURLConnection.HTTP_OK).build();
 		}
