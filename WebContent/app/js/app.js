@@ -41,12 +41,12 @@ app.config(['$routeProvider', '$stateProvider', '$ocLazyLoadProvider', function 
         controller: 'homeCtrl',
         resolve: {
             loadMyDirectives: function ($ocLazyLoad) {
-                loadMyDirectives($ocLazyLoad)
+                return loadMyDirectives($ocLazyLoad);
             }
         }
     });
     $routeProvider.otherwise({
-        redirectTo: '/home'
+        redirectTo: '/login'
     });
 
     $routeProvider.when('/tickets', {
@@ -54,7 +54,7 @@ app.config(['$routeProvider', '$stateProvider', '$ocLazyLoadProvider', function 
         controller: 'ticketCtrl',
         resolve: {
             loadMyDirectives: function ($ocLazyLoad) {
-                loadMyDirectives($ocLazyLoad)
+            	return loadMyDirectives($ocLazyLoad);
             }
         }
     });
@@ -63,13 +63,18 @@ app.config(['$routeProvider', '$stateProvider', '$ocLazyLoadProvider', function 
         controller: 'ticketCtrl',
         resolve: {
             loadMyDirectives: function ($ocLazyLoad) {
-                loadMyDirectives($ocLazyLoad)
+            	return loadMyDirectives($ocLazyLoad);
             }
         }
     })
     $routeProvider.when('/project', {
         templateUrl: 'partials/project.html',
-        controller: 'ticketCtrl'
+        controller: 'ticketCtrl',
+        resolve: {
+            loadMyDirectives: function ($ocLazyLoad) {
+            	return loadMyDirectives($ocLazyLoad);
+            }
+        }
     });
 }]);
 
@@ -112,15 +117,16 @@ function loadMyDirectives($ocLazyLoad) {
     })
 }
 
-app.run(function ($rootScope, $location, loginService) {
-    var routespermission = ['/home']; //route that require login
-    $rootScope.$on('$routeChangeStart', function () {
-        if (routespermission.indexOf($location.path()) != -1) {
-            var connected = loginService.islogged();
-            if (!connected) $location.path('/login');
-            // connected.then(function(msg){
-            // 	if(!msg.data) $location.path('/login');
-            // });
-        }
-    });
+app.run(function($rootScope, $location, loginService){
+	$rootScope.$on('$routeChangeStart', function(){
+		
+		if($location.path()!='/login')
+		{
+			var connected=loginService.islogged();
+			if(connected) {
+				console.log($location.path())
+				$location.path('/login');
+			}
+		}
+	});
 });

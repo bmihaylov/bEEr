@@ -1,46 +1,53 @@
 'use strict';
 app.factory('loginService', function($http, $location, sessionService) {
-	var isloggedIn = true;
 	return {
-		login: function(data, scope) {
+		login : function(data, scope) {
+			var req = {
+				method : 'POST',
+				url : 'http://localhost:8080/bEEr/user/login',
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				data : {
+					"webUser" : {
+						"username" : data.username,
+						"password" : data.pass
+					}
+				}
+			}
 
-			if (data.mail === 'admin@beer.com' && data.pass === 'admin') {
-				isloggedIn = true;
+			$http(req).success(function() {
+				console.log('go to home')
 				$location.path('/home');
-			}
-			else {
+			}).error(function() {
 				scope.msgtxt = 'incorrect information';
-				isloggedIn = false;
 				$location.path('/login');
+			});
+		},
+		logout : function() {
+			var req = {
+				method : 'POST',
+				url : 'http://localhost:8080/bEEr/user/logout',
+				headers : {
+					'Content-Type' : 'application/json'
+				}
 			}
 
-			// var $promise=$http.post('data/user.php',data); //send data to user.php
-			// $promise.then(function(msg){
-			// 	var uid=msg.data;
-			// 	if(uid){
-			// 		//scope.msgtxt='Correct information';
-			// 		sessionService.set('uid',uid);
-			// 		$location.path('/home');
-			// 	}	       
-			// 	else  {
-			// 		scope.msgtxt='incorrect information';
-			// 		$location.path('/login');
-			// 	}				   
-			// });
+			$http(req).success(function() {
+				$location.path('/login');
+			});
 		},
-		logout: function() {
-			// sessionService.destroy('uid');
-			isloggedIn = false;
-			$location.path('/login');
-		},
-		islogged: function() {
-			return isloggedIn;
-			// var $checkSessionServer = $http.post('data/check_session.php');
-			// return $checkSessionServer;
-			/*
-			if(sessionService.get('user')) return true;
-			else return false;
-			*/
+		islogged : function() {
+			var req = {
+				method : 'GET',
+				url : 'http://localhost:8080/bEEr/user/isLogged'
+			}
+
+			$http(req).success(function() {
+				return true;
+			}).error(function() {
+				return false;
+			});
 		}
 	}
 
