@@ -88,6 +88,7 @@ public class TaskDAO {
 		}
 		
 		task.assignUser(user);
+		user.getTasks().add(task);
 		em.persist(task);
 		em.persist(user);
 		return true;
