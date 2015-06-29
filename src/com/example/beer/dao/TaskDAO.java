@@ -83,19 +83,21 @@ public class TaskDAO {
 		}
 	}
 
-	public boolean assignUser(Task task, User user) {
-		if (findTaskByName(task.getName()) == null) {
+	public boolean assignUser(int taskId, int userId) {
+		Task task = getTaskById(taskId);
+		if (task == null) {
 			return false;
 		}
 
-		if (userDAO.getUserByName(user.getName()) == null) {
+		User assignee = userDAO.getUserById(userId);
+		if (assignee == null) {
 			return false;
 		}
 
-		task.assignUser(user);
-		user.getTasks().add(task);
+		task.assignUser(assignee);
+		assignee.getTasks().add(task);
 		em.persist(task);
-		em.persist(user);
+		em.persist(assignee);
 		return true;
 	}
 
