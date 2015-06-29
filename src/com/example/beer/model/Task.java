@@ -31,7 +31,7 @@ public class Task {
 	}
 
 	public Task(String name, String description, Date finalDate,
-			double estimatedHours, Project project, User assignee) {
+			int estimatedHours, Project project, User assignee) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -52,8 +52,8 @@ public class Task {
 	@Temporal(TemporalType.DATE)
 	Date finalDate;
 
-	double estimatedHours;
-	double workedHours;
+	int estimatedHours;
+	int workedHours;
 
 	@Enumerated(EnumType.STRING)
 	TaskStatus status;
@@ -103,7 +103,7 @@ public class Task {
 		return finalDate;
 	}
 
-	public void setHoursWorked(double hours) {
+	public void setHoursWorked(int hours) {
 		this.workedHours = hours;
 	}
 
@@ -111,11 +111,11 @@ public class Task {
 		return workedHours;
 	}
 
-	public void setHoursEstimated(double hours) {
+	public void setHoursEstimated(int hours) {
 		this.estimatedHours = hours;
 	}
 
-	public double getHoursEstimated() {
+	public int getHoursEstimated() {
 		return estimatedHours;
 	}
 
