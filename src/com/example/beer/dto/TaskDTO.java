@@ -20,6 +20,8 @@ public class TaskDTO {
 	@Temporal(TemporalType.DATE)
     private Date finalDate;
 	
+	private double workedHours;
+
 	private double estimatedHours;
 	
     private int projectId;
@@ -35,11 +37,20 @@ public class TaskDTO {
     	name = task.getName();
     	description = task.getDescription();
     	finalDate = task.getFinalDate();
+    	workedHours = task.getHoursWorked();
     	estimatedHours = task.getHoursEstimated();
     	projectId = task.getProject().getId();
 	}
 
-    public int getId() {
+    public double getWorkedHours() {
+		return workedHours;
+	}
+
+	public void setWorkedHours(double workedHours) {
+		this.workedHours = workedHours;
+	}
+
+	public int getId() {
 		return id;
 	}
 

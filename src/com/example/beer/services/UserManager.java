@@ -30,6 +30,18 @@ public class UserManager {
 	@Inject
 	private UserContext userContext;
 
+	@GET
+	@Path("{userId}")
+	public Response getUserById(@PathParam("userId") int userId) {
+		User user = userDAO.getUserById(userId);
+		
+		if (user == null) {
+            return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+		}
+		
+		return Response.ok(new UserDTO(user)).build();
+	}
+
 	@POST
 	@Path("login")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -84,7 +96,7 @@ public class UserManager {
 	}
 	
 	@GET
-	@Path("{username}")
+	@Path("name/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUserByName(@PathParam("username") String username) {
 		User currentUser = userContext.getCurrentUser();
