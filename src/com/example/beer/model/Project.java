@@ -45,7 +45,7 @@ public class Project implements Serializable {
 		}
 	}
 
-	boolean addTask(Task task) {
+	public boolean addTask(Task task) {
 		if (!tasks.contains(task)) {
 			task.setProject(this);
 			tasks.add(task);
