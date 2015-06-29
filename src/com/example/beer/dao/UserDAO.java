@@ -48,6 +48,21 @@ public class UserDAO {
 		return user;
 	}
 	
+	
+	public User getUserById(int userId) {
+        String userQueryText = "SELECT u FROM User u WHERE u.id = :userId";
+		TypedQuery<User> userQuery = em.createQuery(userQueryText, User.class);
+		userQuery.setParameter("userId", userId);
+
+		User user = null;
+		try {
+            user = userQuery.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+		return user;
+	}
+	
 	public Collection<User> getAllUsers() {
         String allUsersQueryText = "SELECT u FROM User u";
 		return em.createQuery(allUsersQueryText, User.class).getResultList();
