@@ -134,8 +134,22 @@ public class TaskManager {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("log/{taskId}/{hours}")
-	public Response log() {
-		return null;
+	public Response log(@PathParam("taskId") int taskId, @PathParam("hours") double hours) {
+		User currentUser = userContext.getCurrentUser();
+		if (currentUser == null) {
+			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+		}
 		
+		Task task = taskDAO.getTaskById(taskId);
+		if (task == null) {
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+		}
+		
+		if (!task.getAssignee().equals(currentUser)) {
+			return Response.status(HttpURLConnection.HTTP_FORBIDDEN).build();
+		}
+		
+		taskDAO.logHours(task, hours);
+        return Response.status(HttpURLConnection.HTTP_OK).build();
 	}
 }

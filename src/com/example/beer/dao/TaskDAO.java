@@ -120,4 +120,9 @@ public class TaskDAO {
 		em.persist(task);
 		return true;
 	}
+	
+	public void logHours(Task task, double hoursToLog) {
+		double hoursWorked = task.getHoursWorked();
+		task.setHoursWorked(hoursWorked + hoursToLog);
+	}
 }
