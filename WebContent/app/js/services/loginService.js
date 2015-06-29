@@ -17,7 +17,6 @@ app.factory('loginService', function($http, $location, sessionService) {
 			}
 
 			$http(req).success(function() {
-				console.log('go to home')
 				$location.path('/home');
 			}).error(function() {
 				scope.msgtxt = 'incorrect information';
@@ -38,16 +37,8 @@ app.factory('loginService', function($http, $location, sessionService) {
 			});
 		},
 		islogged : function() {
-			var req = {
-				method : 'GET',
-				url : 'http://localhost:8080/bEEr/user/isLogged'
-			}
-
-			$http(req).success(function() {
-				return true;
-			}).error(function() {
-				return false;
-			});
+			var $checkSessionServer=$http.get('http://localhost:8080/bEEr/user/isLogged');
+			return $checkSessionServer;
 		}
 	}
 
