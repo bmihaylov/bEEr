@@ -38,13 +38,19 @@ public class TaskManager {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createTask(Project project, User user, String name, String description) {
+	public Response createTask(Project project, int assigneeId, String name, String description) {
 		User currentUser = userContext.getCurrentUser();
 		if (currentUser == null || !currentUser.isAdmin()) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		} 
+	
+		User assignee = userDAO.getUserById(assigneeId);
 		
-		if (!taskDAO.addTask(name, description, user)) {
+		if (assignee == null) {
+			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+		}
+
+		if (!taskDAO.addTask(name, description, assignee)) {
 			return Response.status(HttpURLConnection.HTTP_NOT_ACCEPTABLE).build();
 		}
 		
