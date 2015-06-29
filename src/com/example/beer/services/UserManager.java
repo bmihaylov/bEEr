@@ -132,4 +132,15 @@ public class UserManager {
 		System.out.println(user.getTasks().size());
 		return Response.ok(tasks).build();
 	}
+	
+	@GET
+	@Path("isLogged")
+	public Response isLogged() {
+		if (userContext.getCurrentUser() != null) {
+			return Response.status(HttpURLConnection.HTTP_OK).build();
+		}
+		
+        return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+	}
+	
 }
