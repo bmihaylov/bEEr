@@ -58,6 +58,15 @@ app.config(['$routeProvider', '$stateProvider', '$ocLazyLoadProvider', function 
             }
         }
     });
+    $routeProvider.when('/ticket/:id', {
+        templateUrl: "partials/ticketDetails.html",
+        controller: 'ticketCtrl',
+        resolve: {
+            loadMyDirectives: function ($ocLazyLoad) {
+                loadMyDirectives($ocLazyLoad)
+            }
+        }
+    })
     $routeProvider.when('/project', {
         templateUrl: 'partials/project.html',
         controller: 'ticketCtrl'

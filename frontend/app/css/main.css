@@ -81,3 +81,7 @@ body {
 text-decoration: none;
 background-color: #eee;
 }
+
+.panel-heading a {
+    color: #ffffff !important;
+}
