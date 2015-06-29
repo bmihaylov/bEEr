@@ -1,8 +1,8 @@
 package com.example.beer.model;
 
-import com.example.beer.model.Project;
-
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -51,6 +51,9 @@ public class Task {
 	@ManyToOne
 	User assignee;
 
+	@ManyToOne
+	Set<Comment> comments = new HashSet<Comment>();
+	
 	public User getAssignee() {
 		return assignee;
 	}
@@ -121,5 +124,13 @@ public class Task {
 
 	public void assignUser(User user) {
 		assignee = user;
+	}
+	
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	
+	public void addComment(Comment comment) {
+		comments.add(comment);
 	}
 };
