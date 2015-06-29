@@ -1,6 +1,7 @@
 package com.example.beer.dao;
 
 import javax.ejb.Singleton;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -15,8 +16,10 @@ public class TaskDAO {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@Inject
 	private ProjectDAO projectDAO;
-	private TaskDAO taskDAO;
+
+	@Inject
 	private UserDAO userDAO;
 	
 	public boolean addTask(String name, String description, User user) {
@@ -62,7 +65,7 @@ public class TaskDAO {
 	
 	public boolean addToProject(Project project, Task task) {
 		if (projectDAO.findProjectById(project.getId()) != null &&
-			taskDAO.getTaskById(task.getId()) != null) {
+			getTaskById(task.getId()) != null) {
 			
 			project.addTask(task);
 			task.setProject(project);
@@ -76,7 +79,7 @@ public class TaskDAO {
 	}
 
 	public boolean assignUser(Task task, User user) {
-		if (taskDAO.findTaskByName(task.getName()) == null) {
+		if (findTaskByName(task.getName()) == null) {
 			return false;
 		}
 		
@@ -91,7 +94,7 @@ public class TaskDAO {
 	}
 
 	public boolean changeStatus(Task task, TaskStatus status) {
-		if (taskDAO.findTaskByName(task.getName()) == null) {
+		if (findTaskByName(task.getName()) == null) {
 			return false;
 		}
 		
