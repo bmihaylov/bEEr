@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +28,18 @@ public class Task {
 
 	public Task() {
 		
+	}
+
+	public Task(String name, String description, Date finalDate,
+			double estimatedHours, Project project, User assignee) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.finalDate = finalDate;
+		this.estimatedHours = estimatedHours;
+		status = TaskStatus.BEGIN;
+		this.project = project;
+		this.assignee = assignee;
 	}
 
 	@Id
@@ -51,7 +64,7 @@ public class Task {
 	@ManyToOne
 	User assignee;
 
-	@ManyToOne
+	@OneToMany
 	Set<Comment> comments = new HashSet<Comment>();
 	
 	public User getAssignee() {
