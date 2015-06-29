@@ -90,26 +90,26 @@ public class TaskManager {
 		return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 	}
 
-	// @POST
-	// @Consumes(MediaType.APPLICATION_JSON)
-	// public Response changeStatus(Task task, TaskStatus status) {
-	// User currentUser = userContext.getCurrentUser();
-	//
-	// if (currentUser == null) {
-	// return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
-	// }
-	//
-	// if (!task.getAssignee().equals(currentUser) && !currentUser.isAdmin()) {
-	// return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
-	// }
-	//
-	// if (taskDAO.changeStatus(task, status)) {
-	// return Response.status(HttpURLConnection.HTTP_OK).build();
-	// }
-	//
-	// return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
-	// }
-	//
+	 @POST
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public Response changeStatus(Task task, TaskStatus status) {
+	 User currentUser = userContext.getCurrentUser();
+	
+	 if (currentUser == null) {
+	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+	 }
+	
+	 if (!task.getAssignee().equals(currentUser) && !currentUser.isAdmin()) {
+	 return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build();
+	 }
+	
+	 if (taskDAO.changeStatus(task, status)) {
+	 return Response.status(HttpURLConnection.HTTP_OK).build();
+	 }
+	
+	 return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+	 }
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findTaskById(int taskId) {
