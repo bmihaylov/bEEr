@@ -77,4 +77,16 @@ public class ProjectDAO {
 		em.persist(project);
 		return true;
 	}
+
+	public boolean removeUser(Project project, User user) {
+Project foundProject = findProjectByName(project.getName());
+		
+		if (foundProject == null) {
+			return false;
+		}
+		
+		project.removeUser(user);
+		em.persist(project);
+		return true;
+	}
 }
