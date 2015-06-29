@@ -15,7 +15,7 @@ var app = angular.module('myApp', ['ngRoute',
 //       templateUrl: 'partials/home.html',
 //       controller: 'homeCtrl',
 //       resolve: {
-// 		loadMyDirectives: function($ocLazyLoad) {
+// 		 loadMyDirectives: function($ocLazyLoad) {
 // 			loadMyDirectives($ocLazyLoad)
 // 		}
 // 	}
@@ -51,7 +51,12 @@ app.config(['$routeProvider', '$stateProvider', '$ocLazyLoadProvider', function 
 
     $routeProvider.when('/tickets', {
         templateUrl: 'partials/tickets.html',
-        controller: 'ticketCtrl'
+        controller: 'ticketCtrl',
+        resolve: {
+            loadMyDirectives: function ($ocLazyLoad) {
+                loadMyDirectives($ocLazyLoad)
+            }
+        }
     });
     $routeProvider.when('/project', {
         templateUrl: 'partials/project.html',
@@ -66,7 +71,8 @@ function loadMyDirectives($ocLazyLoad) {
         files: [
             'js/directives/header/header.js',
             'js/directives/header/header-notification/header-notification.js',
-            'js/directives/sidebar/sidebar.js'
+            'js/directives/sidebar/sidebar.js',
+            'js/directives/ticket/ticket.js'
         ]
     }),
         $ocLazyLoad.load({
