@@ -1,5 +1,7 @@
 package com.example.beer.dao;
 
+import java.util.Date;
+
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,36 +18,38 @@ import com.example.beer.model.User;
 public class TaskDAO {
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Inject
 	private ProjectDAO projectDAO;
 
 	@Inject
 	private UserDAO userDAO;
-	
-	public boolean addTask(String name, String description, User user) {
+
+	public boolean addTask(String name, String description, Date finalDate,
+			int estimatedHours, Project project, User user) {
 		Task foundTask = findTaskByName(name);
-		
+
 		if (foundTask == null) {
-			em.persist(foundTask);
+			em.persist(new Task(name, description, finalDate, estimatedHours,
+					project, user));
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public Task findTaskByName(String name) {
 		String idQueryText = "SELECT t FROM Task t WHERE t.name = :name";
 		TypedQuery<Task> taskQuery = em.createQuery(idQueryText, Task.class);
 		taskQuery.setParameter("name", name);
-		
+
 		Task task = null;
 		try {
-            task = taskQuery.getSingleResult();
+			task = taskQuery.getSingleResult();
 		} catch (Exception e) {
 			return null;
 		}
-		
+
 		return task;
 	}
 
@@ -56,23 +60,23 @@ public class TaskDAO {
 
 		Task task = null;
 		try {
-            task = taskQuery.getSingleResult();
+			task = taskQuery.getSingleResult();
 		} catch (Exception e) {
 			return null;
 		}
-		
+
 		return task;
 	}
-	
+
 	public boolean addToProject(Project project, Task task) {
-		if (projectDAO.findProjectById(project.getId()) != null &&
-			getTaskById(task.getId()) != null) {
-			
+		if (projectDAO.findProjectById(project.getId()) != null
+				&& getTaskById(task.getId()) != null) {
+
 			project.addTask(task);
 			task.setProject(project);
 			em.persist(project);
 			em.persist(task);
-			
+
 			return true;
 		} else {
 			return false;
@@ -83,11 +87,11 @@ public class TaskDAO {
 		if (findTaskByName(task.getName()) == null) {
 			return false;
 		}
-		
+
 		if (userDAO.getUserByName(user.getName()) == null) {
 			return false;
 		}
-		
+
 		task.assignUser(user);
 		user.getTasks().add(task);
 		em.persist(task);
@@ -99,7 +103,7 @@ public class TaskDAO {
 		if (findTaskByName(task.getName()) == null) {
 			return false;
 		}
-		
+
 		task.setTaskStatus(status);
 		em.persist(task);
 		return true;
@@ -109,7 +113,7 @@ public class TaskDAO {
 		if (findTaskByName(task.getName()) == null) {
 			return false;
 		}
-		
+
 		task.addComment(comment);
 		em.persist(task);
 		return true;
