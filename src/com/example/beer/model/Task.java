@@ -51,6 +51,10 @@ public class Task {
 	@ManyToOne
 	User assignee;
 
+	public User getAssignee() {
+		return assignee;
+	}
+
 	void setId(int id) {
 		this.id = id;
 	}
