@@ -79,7 +79,7 @@ public class TaskManager {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build(); 
 		}
 		
-		if (task.getAssignee() != currentUser && !currentUser.isAdmin()) {
+		if (!task.getAssignee().equals(currentUser) && !currentUser.isAdmin()) {
 			return Response.status(HttpURLConnection.HTTP_BAD_REQUEST).build(); 
 		}
 
