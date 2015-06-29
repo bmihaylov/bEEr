@@ -18,6 +18,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -28,8 +30,14 @@ public class Task implements Serializable {
 
 	private static final long serialVersionUID = 5706226867487646787L;
 
+	@XmlEnum
 	public enum TaskStatus {
-		BEGIN, INPROGRESS, FINISHED
+		@XmlEnumValue(value="begin")
+		BEGIN,
+		@XmlEnumValue(value="inprogress")
+		INPROGRESS,
+		@XmlEnumValue(value="finished")
+		FINISHED
 	}
 
 	public Task() {
