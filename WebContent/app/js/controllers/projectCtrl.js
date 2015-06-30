@@ -26,12 +26,14 @@ app.controller('projectCtrl', ['$scope','homeService', function($scope,homeServi
     $scope.projectSelectedName="";
     $scope.tasks=[];
     $scope.selectTasks = function(item) {
-    	console.log("item: ",item);
     	$scope.projectSelectedName = item.name;
     	$scope.tasks = item.tasks;
     	$scope.hasProjectSelected = true;
 	}
-    
+    $scope.selectedTask={};
+    $scope.editTask = function(item) {
+    	$scope.selectedTask=item;
+	}
     $scope.tickets=[{id: 0, userName: "Ivan Ivanov", name: "Fix this bug", description: "Sample information"},
         {id: 1, userName: "Petar Ivanov", name: "Fix this bug", description: "Sampldsae information"},
         {id: 2, userName: "Georgi Ivanov", name: "Fix that bug", description: "Sample information"},
