@@ -66,6 +66,7 @@ public class ProjectManager {
 	@Path("user")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Collection<Project> getProjectsForUser(String username) {
+		System.out.println("username:" + username);
 		return projectDAO.getProjectsForUser(username);
 	}
 

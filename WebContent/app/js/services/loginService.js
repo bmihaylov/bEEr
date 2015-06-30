@@ -1,5 +1,5 @@
 'use strict';
-app.factory('loginService', function($http, $location, sessionService) {
+app.factory('loginService', function($http, $location) {
 	return {
 		login : function(data, scope) {
 			var req = {

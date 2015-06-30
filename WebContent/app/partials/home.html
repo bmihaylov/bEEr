@@ -1,17 +1,179 @@
 <div id="wrapper">
 
-        <!-- Navigation -->
-            
-        <header></header>
-        <!-- /.navbar-top-links -->
-        
-               
-        <!-- /.navbar-static-side -->
+	<!-- Navigation -->
 
-            <div id="page-wrapper" style="min-height: 561px;">
+	<header></header>
+	<!-- /.navbar-top-links -->
 
-                <div ui-view></div>
-                
-            </div>
-            <!-- /#page-wrapper -->
-    </div>
+
+	<!-- /.navbar-static-side -->
+
+	<div id="page-wrapper" style="min-height: 1561px;">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Home</h1>
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-lg-3 col-md-6 ng-isolate-scope" number="6"
+				comments="New comments!" colour="primary" type="comments">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-comments fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge ng-binding">{{comments.length}}</div>
+								<div class="ng-binding">New comments!</div>
+							</div>
+						</div>
+					</div>
+					<a ng-click="show('comments')">
+						<div class="panel-footer">
+							<span class="pull-left">View Details</span> <span
+								class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 ng-isolate-scope" number="12"
+				comments="New tasks!" colour="primary" type="user">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-edit fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge ng-binding">{{tasks.length}}</div>
+								<div class="ng-binding">New tasks!</div>
+							</div>
+						</div>
+					</div>
+					<a ng-click="show('tasks')">
+						<div class="panel-footer">
+							<span class="pull-left">View Details</span> <span
+								class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 ng-isolate-scope" number="18"
+				comments="New orders!" colour="yellow" type="shopping-cart">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-book fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class="huge ng-binding">{{projects.length}}</div>
+								<div class="ng-binding">New Projects!</div>
+							</div>
+						</div>
+					</div>
+					<a ng-click="show('projects')">
+						<div class="panel-footer">
+							<span class="pull-left">View Details</span> <span
+								class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</div>
+					</a>
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="animate-switch-container" ng-switch on="selection">
+					<div class="animate-switch" ng-switch-when="comments">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel panel-default">
+									<div class="panel-heading">New Comments</div>
+									<!-- /.panel-heading -->
+									<div class="panel-body">
+										
+										<div class="panel panel-info" ng-repeat="item in comments track by $index">
+					                        <div class="panel-heading">
+					                            Project: {{item.projectName}}
+					                            <button type="button" class="close" data-dismiss="alert"
+												aria-hidden="true" ng-click="removeComment(item)">x</button>
+					                        </div>
+					                        <div class="panel-body">
+					                            <p>{{item.content}}</p>
+					                        </div>
+					                        <div class="panel-footer">
+					                            {{item.date}}
+					                        </div>
+					                    </div>
+										
+										
+									</div>
+									<!-- .panel-body -->
+								</div>
+								<!-- /.panel -->
+							</div>
+						</div>
+					</div>
+					<div class="animate-switch" ng-switch-when="tasks">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel panel-default">
+									<div class="panel-heading">New Tasks</div>
+									<!-- /.panel-heading -->
+									<div class="panel-body">
+										<div class="panel panel-info" ng-repeat="item in tasks track by $index">
+					                        <div class="panel-heading">
+					                            Project: {{item.projectName}}
+					                            <button type="button" class="close" data-dismiss="alert"
+												aria-hidden="true" ng-click="removeTask(item)">x</button>
+					                        </div>
+					                        <div class="panel-body">
+					                       		<p><b>Task name:</b> {{item.name}}</p>
+					                            <p><b>Task description:</b> {{item.description}}</p>
+					                        </div>
+					                    </div>
+										=
+
+									</div>
+									<!-- .panel-body -->
+								</div>
+								<!-- /.panel -->
+							</div>
+						</div>
+					</div>
+					<div class="animate-switch" ng-switch-default>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="panel panel-default">
+									<div class="panel-heading">New Projects</div>
+									<!-- /.panel-heading -->
+									<div class="panel-body">
+										<div class="alert alert-success alert-dismissable" ng-repeat="item in projects">
+											<button type="button" class="close" data-dismiss="alert"
+												aria-hidden="true" ng-click="removeProject(item)">x</button>
+												{{item.name}}
+										</div>
+
+									</div>
+									<!-- .panel-body -->
+								</div>
+								<!-- /.panel -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /#page-wrapper -->
+</div>

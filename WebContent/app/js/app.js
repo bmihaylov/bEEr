@@ -40,7 +40,7 @@ app.config([ '$routeProvider', '$stateProvider', '$ocLazyLoadProvider',
 			})
 			$routeProvider.when('/project', {
 				templateUrl : 'partials/project.html',
-				controller : 'ticketCtrl',
+				controller : 'projectCtrl',
 				resolve : {
 					loadMyDirectives : function($ocLazyLoad) {
 						return loadMyDirectives($ocLazyLoad);
@@ -60,7 +60,11 @@ function loadMyDirectives($ocLazyLoad) {
 								'js/directives/header/header.js',
 								'js/directives/header/header-notification/header-notification.js',
 								'js/directives/sidebar/sidebar.js',
-								'js/directives/ticket/ticket.js' ]
+								'js/directives/ticket/ticket.js',
+								'js/directives/chat/chat.js',
+								'js/directives/dashboard/stats/stats.js',
+								'js/directives/notifications/notifications.js',
+								'js/directives/timeline/timeline.js' ]
 					}),
 			$ocLazyLoad
 					.load({
